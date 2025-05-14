@@ -3,29 +3,34 @@ using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(PieceCreator))]
-public class ChessGameController : MonoBehaviour
+public abstract class ChessGameController : MonoBehaviour
 {
-    private enum GameState { Init,Play,Finished}
+    public enum GameState { Init,Play,Finished}
 
     [SerializeField] private BoardLayout staratingBoardLayout;
-    [SerializeField] private Board board;
-    [SerializeField] private ChessUiManager chessUiManager;
+    private Board board;
+    private ChessUiManager uiManager;
     private PieceCreator pieceCreator;
 
-    private Chessplayer whitePlayer;
-    private Chessplayer blackPlayer;
-    private Chessplayer activePlayer;
-    private GameState gameState;
+    private CameraSetup cameraSetup;
+    protected Chessplayer whitePlayer;
+    protected Chessplayer blackPlayer;
+    protected Chessplayer activePlayer;
+    protected GameState gameState;
+    protected abstract void SetGameState(GameState state);
+    public abstract void TryToStartCurrentGame();
+    public abstract bool CanPerformMove();
     private void Awake()
-    {
-        SetDependencies();
-        CreatePlayers();
-    }
-    private void SetDependencies()
     {
         pieceCreator = GetComponent<PieceCreator>();
     }
-    private void CreatePlayers()
+    public void SetDependencies(ChessUiManager uiManager,Board board,CameraSetup cameraSetup)
+    {
+        this.cameraSetup = cameraSetup;
+        this.board = board;
+        this.uiManager = uiManager;
+    }
+    public void CreatePlayers()
     {
         whitePlayer = new Chessplayer(TeamColor.White,board);
         blackPlayer = new Chessplayer(TeamColor.Black,board);
@@ -34,17 +39,19 @@ public class ChessGameController : MonoBehaviour
     {
         StartNewGame();
     }
-    private void StartNewGame()
+    public void StartNewGame()
     {
-        chessUiManager.HideUI();
+        uiManager.OnGameStarted();
         SetGameState(GameState.Init);
-        board.SetDependencies(this);
         CreatePiecesFromLayout(staratingBoardLayout);
         activePlayer = whitePlayer;
         GenerateAllPossibleMoves(activePlayer);
-        SetGameState(GameState.Play);
+        TryToStartCurrentGame();
     }
-
+    public void SetUpCamera(TeamColor team)
+    {
+        cameraSetup.SetupCamera(team);
+    }
     public void RestartGame()
     {
         DestroyAllPieces();
@@ -58,11 +65,6 @@ public class ChessGameController : MonoBehaviour
     {
         whitePlayer.activePieces.ForEach(p=>Destroy(p.gameObject));
         blackPlayer.activePieces.ForEach(p=>Destroy(p.gameObject));
-    }
-
-    private void SetGameState(GameState state)
-    {
-        this.gameState = state;
     }
     public bool IsGameInProgress()
     {
@@ -121,7 +123,7 @@ public class ChessGameController : MonoBehaviour
 
     private void EndGame()
     {
-        chessUiManager.OnGameFinished(activePlayer.team.ToString());
+       uiManager.OnGameFinished(activePlayer.team.ToString());
 
 
         Debug.Log("GameFinished");

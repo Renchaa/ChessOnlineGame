@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(SquareSelectorCreator))]
-public class Board : MonoBehaviour
+public abstract class Board : MonoBehaviour
 {
     public const int BOARD_SIZE = 8;
 
@@ -14,7 +14,9 @@ public class Board : MonoBehaviour
     private Piece selectedPiece;
     private ChessGameController gameController;
     private SquareSelectorCreator squareSelectorCreator;
-    private void Awake()
+    public abstract void SelectedPieceMoved(Vector2 coords);
+    public abstract void SetSelectedPiece(Vector2 coords);
+    protected virtual void Awake()
     {
         squareSelectorCreator = GetComponent<SquareSelectorCreator>();
         CreaterGrid();
@@ -25,7 +27,7 @@ public class Board : MonoBehaviour
     }
     public void OnSquareSelected(Vector3 inputPosition)
     {
-        if (!gameController.IsGameInProgress())
+        if (!gameController ||!gameController.CanPerformMove())
             return;
         Vector2Int coords = CalculateCoordsFromPosition(inputPosition);
         Piece piece = GetPieceOnSquare(coords);
@@ -37,27 +39,35 @@ public class Board : MonoBehaviour
             }
             else if(piece != null&&selectedPiece !=piece && gameController.IsTeamTurnActive(piece.team))
             {
-                SelectPiece(piece);
+                SelectPiece(coords);
             }
             else if (selectedPiece.CanMoveTo(coords))
             {
-                OnSelectedPieceMove(coords,selectedPiece);
+                SelectedPieceMoved(coords);
             }
         }
         else
         {
             if(piece != null && gameController.IsTeamTurnActive(piece.team))
             {
-                SelectPiece(piece);
+                SelectPiece(coords);
             }
         }
     }
-
-    private void OnSelectedPieceMove(Vector2Int coords, Piece piece)
+    public void OnSetSelectedPiece(Vector2Int coords)
+    {
+        Piece piece = GetPieceOnSquare(coords);
+        selectedPiece = piece;
+        if (selectedPiece==null)
+        {
+            Debug.Log("Selected piece is null");
+        }
+    }
+    public void OnSelectedPieceMove(Vector2Int coords)
     {
         TryToTakeOppositepiece(coords);
 
-        UpdateBoardOnPieceMove(coords, piece.occupiedSquare,null, piece);
+        UpdateBoardOnPieceMove(coords, selectedPiece.occupiedSquare, null, selectedPiece);
         selectedPiece.MovePiece(coords);
         DeselectPiece();
         EndTurn();
@@ -66,6 +76,10 @@ public class Board : MonoBehaviour
     private void TryToTakeOppositepiece(Vector2Int coords)
     {
         Piece piece = GetPieceOnSquare(coords);
+        if(selectedPiece == null)
+        {
+            Debug.Log("SelectedPiece is null");
+        }
         if (piece!=null && !selectedPiece.IsFromSameTeam(piece))
         {
             TakePiece(piece);
@@ -92,10 +106,11 @@ public class Board : MonoBehaviour
         grid[newCoords.x, newCoords.y] = newPiece;
     }
 
-    private void SelectPiece(Piece piece)
+    private void SelectPiece(Vector2Int coords)
     {
+        Piece piece = GetPieceOnSquare(coords);
         gameController.RemoveMovesEnablingAttackOnPieceOfType<King>(piece);
-        selectedPiece = piece;
+        SetSelectedPiece(coords);
         List<Vector2Int> selection = selectedPiece.availableMoves;
         ShowSelectionSquares(selection);
         Debug.Log($"Selected piece: {selectedPiece}");
@@ -126,13 +141,16 @@ public class Board : MonoBehaviour
         {
             return grid[coords.x, coords.y];
         }
+        Debug.Log("GetPieceOnSquare is null");
         return null;
     }
 
     public bool CheckIfCoordinatedAreaOnBoard(Vector2Int coords)
     {
-        if(coords.x<0||coords.y<0||coords.x>=BOARD_SIZE||coords.y>=BOARD_SIZE)
+        if (coords.x < 0 || coords.y < 0 || coords.x >= BOARD_SIZE || coords.y >= BOARD_SIZE)
+        {
             return false;
+        }
         return true; 
     }
 

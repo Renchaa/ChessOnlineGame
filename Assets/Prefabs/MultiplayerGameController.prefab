@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &220715124753192193
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7563216276245262536}
+  - component: {fileID: 3712914524162713402}
+  - component: {fileID: 4116550789188751805}
+  m_Layer: 0
+  m_Name: MultiplayerGameController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7563216276245262536
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 220715124753192193}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3712914524162713402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 220715124753192193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48a3fad207b417c4dbb74b12b7d17a64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  piecesPrefabs:
+  - {fileID: 196866, guid: a71fd906a2159e247ab4d632e46947db, type: 3}
+  - {fileID: 130826, guid: 861e95a585868b643bf2e4a1d0ae63b7, type: 3}
+  - {fileID: 196802, guid: b6c7ad354ac474944ba26b2895a59759, type: 3}
+  - {fileID: 138226, guid: edd4f3477fd5a8b4599bf6c0dac39f1d, type: 3}
+  - {fileID: 184594, guid: 1f7a3b3d104b8e44cb39f5356ae1d0bb, type: 3}
+  - {fileID: 125018, guid: 9d3e9c36668dcfe44b524760a4c3a3b5, type: 3}
+  blackMaterial: {fileID: 2100000, guid: d934dd0260f7f4848909d80c8dc2d40d, type: 2}
+  whiteMaterial: {fileID: 2100000, guid: f822399e7800a564fb1167379f3481de, type: 2}
+--- !u!114 &4116550789188751805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 220715124753192193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b520927f41d89845b8db74af508ad4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  staratingBoardLayout: {fileID: 11400000, guid: 5a2b0473754dd114dacfcd44f1ef69f9, type: 2}
+  board: {fileID: 0}
+  chessUiManager: {fileID: 0}

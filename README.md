@@ -29,9 +29,9 @@ This is a multiplayer and single-player chess game built in Unity using **Photon
 Scripts/
 - Contains all core game logic scripts.
 - Subfolders:
-  • Enums/ – Stores enums like PieceType and TeamColor used for game rules and visuals.
-  • InputSystem/ – Modular handlers for input sources: UI clicks, collider raycasts, and audio input.
-  • Pieces/ – Each chess piece (Pawn, Rook, King, etc.) has its own script defining movement logic.
+-  Enums/ – Stores enums like PieceType and TeamColor used for game rules and visuals.
+-  InputSystem/ – Modular handlers for input sources: UI clicks, collider raycasts, and audio input.
+-  Pieces/ – Each chess piece (Pawn, Rook, King, etc.) has its own script defining movement logic.
 
 - Main logic scripts in root:
   • Board.cs – Maintains board state and data.

@@ -13,7 +13,8 @@ This is a multiplayer and single-player chess game built in Unity using **Photon
 -  Distinct scripts for single-player and multiplayer board behaviors
 -  Chess UI Manager and GameInitializer for session control
 
----
+Folder Overview
+---------------
  Main logic scripts in root:
 -  Board.cs – Maintains board state and data.
 -   ChessGameController.cs – Manages game flow.

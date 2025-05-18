@@ -1,17 +1,6 @@
 # Unity Chess online game using Photon
 
 This is a multiplayer and single-player chess game built in Unity using **Photon PUN 2** for networking. The project features full local and online match support, animated piece movement, and a modular architecture for future expansion.
-
----
-
-## 🔧 Tech Stack
-
-- **Unity** (2022+)
-- **Photon PUN 2** (Realtime multiplayer networking)
-- **C# Job System** (for board logic optimizations)
-- **Scriptable Input System** (customized handlers)
-- **Modular Tweeners** (for smooth movement animations)
-
 ---
 
 ## ✨ Features

@@ -33,13 +33,13 @@ Scripts/
 -  InputSystem/ – Modular handlers for input sources: UI clicks, collider raycasts, and audio input.
 -  Pieces/ – Each chess piece (Pawn, Rook, King, etc.) has its own script defining movement logic.
 
-- Main logic scripts in root:
-  • Board.cs – Maintains board state and data.
-  • ChessGameController.cs – Manages game flow.
-  • MultiplayerBoard.cs / SingleplayerBoard.cs – Separate handling for online and offline play.
-  • ChessPlayer.cs – Stores player-side data.
-  • NetworkManager.cs – Manages Photon connection and matchmaking.
-  • PieceCreator.cs – Handles piece spawning and setup.
+ Main logic scripts in root:
+-  Board.cs – Maintains board state and data.
+-   ChessGameController.cs – Manages game flow.
+-   MultiplayerBoard.cs / SingleplayerBoard.cs – Separate handling for online and offline play.
+-   ChessPlayer.cs – Stores player-side data.
+-   NetworkManager.cs – Manages Photon connection and matchmaking.
+-   PieceCreator.cs – Handles piece spawning and setup.
 
 Photon/
 - Holds networking setup for Photon PUN 2.
